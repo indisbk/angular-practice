@@ -1,11 +1,18 @@
 <form class="card" [formGroup]="form" (ngSubmit)="submit()">
   <h2>Login to admin panel</h2>
 
-
+  <!--Error alert for entered invalid data(email/password)-->
   <div
     class="alert alert-danger"
     *ngIf="auth.error$ | async as error">
     {{error}}
+  </div>
+
+  <!--Warning alert for entering data(email/password) by users-->
+  <div
+    class="alert alert-info"
+    *ngIf="message">
+    {{message}}
   </div>
 
   <div
