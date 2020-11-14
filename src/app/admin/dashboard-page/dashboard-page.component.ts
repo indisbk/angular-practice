@@ -15,6 +15,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   // Variable for subscription
   // pretend from memory leaks
   pSub: Subscription;
+  searchStr: '';
 
   constructor(private postsService: PostsService) { }
 
