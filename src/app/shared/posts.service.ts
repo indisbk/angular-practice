@@ -20,4 +20,17 @@ export class PostsService {
         };
       }));
   }
+
+  getAllPosts(): Observable<Post[]> {
+    return this.http.get(`${environment.fireDBUrl}/posts.json`)
+      .pipe(map((response: {[key: string]: any}) => {
+        return Object
+          .keys(response)
+          .map(key => ({
+            ...response[key],
+            id: key,
+            date: new Date(response[key].date)
+          }));
+      }));
+  }
 }
