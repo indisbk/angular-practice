@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {PostsService} from '../../shared/posts.service';
+import {PostsService} from '../../shared/services/posts.service';
 import {Post} from '../../shared/interfaces';
 import {Subscription} from 'rxjs';
 
@@ -11,27 +11,37 @@ import {Subscription} from 'rxjs';
 export class DashboardPageComponent implements OnInit, OnDestroy {
 
   posts: Post[];
-
-  // Variable for subscription
-  // pretend from memory leaks
-  pSub: Subscription;
   searchStr: '';
+
+
+  // Variable for subscription(get all posts)
+  // pretend from memory leaks
+  getAllSub: Subscription;
+
+  // Variable for subscription(delete post)
+  // pretend from memory leaks
+  delSub: Subscription;
 
   constructor(private postsService: PostsService) { }
 
   ngOnInit(): void {
-    this.pSub = this.postsService.getAllPosts().subscribe(posts => {
+    this.getAllSub = this.postsService.getAllPosts().subscribe(posts => {
       this.posts = posts;
     });
   }
 
   ngOnDestroy(): void {
-    if (this.pSub) {
-      this.pSub.unsubscribe();
+    if (this.getAllSub) {
+      this.getAllSub.unsubscribe();
+    }
+    if (this.delSub) {
+      this.delSub.unsubscribe();
     }
   }
 
-  remove(id: string): void {
-
+  removePost(id: string): void {
+    this.delSub = this.postsService.delete(id).subscribe(() => {
+      this.posts = this.posts.filter(post => post.id !== id);
+    });
   }
 }

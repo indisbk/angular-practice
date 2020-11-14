@@ -9,7 +9,7 @@ import { PostPageComponent } from './post-page/post-page.component';
 import { PostComponent } from './shared/components/post/post.component';
 import {SharedModule} from './shared/shared.module';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
-import {AuthInterceptor} from './shared/auth.interceptor';
+import {AuthInterceptor} from './shared/interceptors/auth.interceptor';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
